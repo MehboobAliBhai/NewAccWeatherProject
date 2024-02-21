@@ -10,12 +10,16 @@ public class Day {
 
     @JsonProperty("Icon")
     private Integer icon;// int -- 0, Integer -- null
+
     @JsonProperty("IconPhrase")
     private String iconPhrase;
+
     @JsonProperty("HasPrecipitation")
     private Boolean hasPrecipitation;
+
     @JsonProperty("PrecipitationType")
     private String precipitationType;
+
     @JsonProperty("PrecipitationIntensity")
     private String precipitationIntensity;
 }

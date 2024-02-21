@@ -13,6 +13,7 @@ public class NewAccWeatherProjectApplication {
 		SpringApplication.run(NewAccWeatherProjectApplication.class, args);
 	}
 
+	//TODO :: Create the config package and move this there
 	@Bean
 	public RestTemplate getRestTemplate(){
 		return new RestTemplate();
