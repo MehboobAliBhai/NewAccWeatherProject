@@ -16,6 +16,5 @@ public class NewAccuWeatherException extends RuntimeException {
 //    private final int timestamp;
 
 
-
 }
 

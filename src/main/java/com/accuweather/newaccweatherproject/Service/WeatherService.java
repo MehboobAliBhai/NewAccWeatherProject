@@ -1,12 +1,9 @@
-package com.accuweather.newaccweatherproject.service;
+package com.accuweather.newaccweatherproject.Service;
 
 import com.accuweather.newaccweatherproject.exception.NewAccuWeatherException;
-import com.accuweather.newaccweatherproject.model.DailyForecast;
-import com.accuweather.newaccweatherproject.model.Day;
-import com.accuweather.newaccweatherproject.model.Night;
+import com.accuweather.newaccweatherproject.model.*;
 import com.accuweather.newaccweatherproject.model.request.SearchDayRequest;
 import lombok.RequiredArgsConstructor;
-import com.accuweather.newaccweatherproject.model.Forecast;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.message.TimestampMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,17 +48,7 @@ public class WeatherService {
      *
      * @return
      */
-    public List<Day> getDays() {
-        List<Day> days = new ArrayList<Day>();
-        Forecast forecast = getWeather();
-        List<DailyForecast> dailyForecastList = forecast.getDailyForecasts();
-        for (DailyForecast dailyForecast : dailyForecastList) {
-            Day day = dailyForecast.getDay();
-            days.add(day);
-        }
 
-        return days;
-    }
 
     public List<Day> filterIcon(List<Day> dailyForecastList) {
         List<Day> filteredList = new ArrayList<>();
@@ -82,7 +69,7 @@ public class WeatherService {
 
         for (Day phrase : dailyForecastList) {
             String phraseValue = phrase.getIconPhrase();
-            if (phraseValue.equalsIgnoreCase("cold")) {
+            if (phraseValue.equalsIgnoreCase("Partly sunny")) {
                 filteredPhrase.add(phrase);
             }
         }
@@ -132,7 +119,7 @@ public class WeatherService {
         String key = searchDayRequest.getKey();
 //            if key equals to iconphrase then filter days based on request value
         //write similar logic as IconPhrase for Icon and HasPrecipitation
-        try{
+        try {
             if (key.equalsIgnoreCase(ICON_PHRASE)) {
                 String requestValue = searchDayRequest.getValue();
                 List<Day> days = getDays();
@@ -160,12 +147,25 @@ public class WeatherService {
                     }
                 }
             }
-        }catch(Exception exception){
+        } catch (Exception exception) {
             log.error("Exception occurred at filter method with reason {}", exception.getMessage());
-            throw new NewAccuWeatherException("imtiyaz is hero","uri", HttpStatus.PRECONDITION_FAILED,"description");
+            throw new NewAccuWeatherException("imtiyaz is hero", "uri", HttpStatus.PRECONDITION_FAILED, "description");
         }
 
         return filtered;
+    }
+
+
+    public List<Day> getDays() {
+        List<Day> days = new ArrayList<Day>();
+        Forecast forecast = getWeather();
+        List<DailyForecast> dailyForecastList = forecast.getDailyForecasts();
+        for (DailyForecast dailyForecast : dailyForecastList) {
+            Day day = dailyForecast.getDay();
+            days.add(day);
+        }
+
+        return days;
     }
 
     public List<Night> getNight() {
@@ -209,6 +209,37 @@ public class WeatherService {
             }
         }
         return filteredIconPhrase;
+    }
+
+    /*public List<DailyForecast> getDayAndNight() {
+
+        List<DailyForecast> forecast = new ArrayList<>();
+        Forecast forecasts = getWeather();
+        List<DailyForecast> dailyForecastList = forecasts.getDailyForecasts();
+        List<DailyForecast> dayAndNightForecasts = new ArrayList<>();
+
+        for (DailyForecast dailyForecast : dailyForecastList) {
+            Day day = dailyForecast.getDay();
+            Night night = dailyForecast.getNight();
+
+            DailyForecast dayAndNightForecast = new DailyForecast(day, night);
+            dayAndNightForecasts.add(dayAndNightForecast);
+        }
+
+        return dayAndNightForecasts;
+    }*/
+
+    public DayNight getDayNightData() {
+
+        DayNight dayNight = new DayNight();
+
+        List<Day> days = getDays();
+        List<Night> nights = getNight();
+
+        dayNight.setListOfDay(days);
+        dayNight.setListOfNight(nights);
+
+        return dayNight;
     }
 }
 

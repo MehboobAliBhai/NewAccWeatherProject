@@ -1,12 +1,9 @@
 package com.accuweather.newaccweatherproject.controller;
 
 import com.accuweather.newaccweatherproject.exception.NewAccuWeatherException;
-import com.accuweather.newaccweatherproject.model.DailyForecast;
-import com.accuweather.newaccweatherproject.model.Day;
-import com.accuweather.newaccweatherproject.model.Night;
+import com.accuweather.newaccweatherproject.model.*;
 import com.accuweather.newaccweatherproject.model.request.SearchDayRequest;
-import com.accuweather.newaccweatherproject.service.WeatherService;
-import com.accuweather.newaccweatherproject.model.Forecast;
+import com.accuweather.newaccweatherproject.Service.WeatherService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -54,21 +51,31 @@ public class WeatherController {
         return weatherService.filter(searchDayRequest);
     }
 
-    @GetMapping ("/night")
-    public List<Night> getNight(){
+    @GetMapping("/night")
+    public List<Night> getNight() {
 
         return weatherService.getNight();
-        }
+    }
 
     @GetMapping("/night/icon")
     public List<Night> getNightIcon() {
 
         return weatherService.nightIcon(getNight());
     }
+
     @GetMapping("/night/iconPhrase")
-    public List<Night> getIconPhrase(){
+    public List<Night> getIconPhrase() {
         return weatherService.nightIconPhrase(getNight());
     }
+
+    @GetMapping("/day-and-night")
+    public DayNight getDayAndNight(@RequestBody DayNight dayNight) {
+        log.info("Started getDayAndNight method with parameter {} ", dayNight.toString());
+        DayNight dayNight1 = weatherService.getDayNightData();
+        log.info("Ending getDayAndNight Method");
+        return dayNight1;
+    }
+
 }
 
 

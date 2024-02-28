@@ -9,13 +9,13 @@ import org.springframework.web.client.RestTemplate;
 //@Configuration
 public class NewAccWeatherProjectApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(NewAccWeatherProjectApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(NewAccWeatherProjectApplication.class, args);
+    }
 
-	//TODO :: Create the config package and move this there
-	@Bean
-	public RestTemplate getRestTemplate(){
-		return new RestTemplate();
-	}
+    //TODO :: Create the config package and move this there
+    @Bean
+    public RestTemplate getRestTemplate() {
+        return new RestTemplate();
+    }
 }

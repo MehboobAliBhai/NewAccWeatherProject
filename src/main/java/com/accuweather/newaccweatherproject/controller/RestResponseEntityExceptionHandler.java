@@ -12,8 +12,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(value = {RuntimeException.class,IllegalStateException.class })
-    protected ResponseEntity<Object> handleConflict(NewAccuWeatherException ex, WebRequest request){
+    @ExceptionHandler(value = {RuntimeException.class, IllegalStateException.class})
+    protected ResponseEntity<Object> handleConflict(NewAccuWeatherException ex, WebRequest request) {
 
         String bodyResponse = ex.getMessage();
         return handleExceptionInternal(ex, bodyResponse, new HttpHeaders(), HttpStatus.CONFLICT, request);
